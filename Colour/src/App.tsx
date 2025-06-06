@@ -1,15 +1,29 @@
-import FetchGrid from "./Grid"
-import Pallet from "./Pallet"
+import LogInPage from "./login"
+import { BrowserRouter, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
+import ColourPage from './ColourMainPage';
+
 
 
 function App() {
+  
+  function logOut(){
+    localStorage.removeItem('token');
+    
+  }
+
   return (
-    <div className="App">
-      <h1>Color Grid</h1>
-      <FetchGrid />
-      <h2>Color Pallet</h2>
-      <Pallet />
-    </div>
+    <>
+      <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<LogInPage />} />
+        <Route path="/colour" element={<ColourPage/>}/>
+        {/* Redirect root to login */}
+        <Route path="/" element={<Navigate to="/login" replace />} />
+        
+      </Routes>
+    </BrowserRouter>
+    </>
+
   )
 }
 export default App

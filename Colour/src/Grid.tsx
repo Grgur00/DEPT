@@ -6,7 +6,7 @@ function useGetColor() {
     useEffect(() => {
         const auth = {
             headers: {
-                'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzIsImVtYWlsIjoiZ3JndXJpbm92aWMuYUBnbWFpbC5jb20iLCJpYXQiOjE3NDkxNTcyMTUsImV4cCI6MTc0OTI0MzYxNX0.UpD2RNS6wa-4TJmnI0lSzXTYLcSRerpgLbb9NZ8A7p8'
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
             }
         };
 
@@ -39,6 +39,7 @@ function addColor(color: string) {
 
 function saveColors(colors: string[]) {
     localStorage.setItem('savedColors', JSON.stringify(colors));
+    window.dispatchEvent(new Event('newColorAddedToPallet'));
 }
 
 const FetchGrid: React.FC = () => {

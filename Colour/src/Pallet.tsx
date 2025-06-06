@@ -13,6 +13,9 @@ function removeColor(color: string) {
 }
 const Pallet: React.FC = () => {
     const [palletColors, setPalletColors] = useState<string[]>(getSavedColors());
+    window.addEventListener('newColorAddedToPallet', ()=>{
+        updatePallet();
+    })
     const updatePallet = () => {
         setPalletColors(getSavedColors());
     }
