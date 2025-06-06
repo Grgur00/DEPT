@@ -6,10 +6,6 @@ import ColourPage from './ColourMainPage';
 
 function App() {
   
-  function logOut(){
-    localStorage.removeItem('token');
-    
-  }
 
   return (
     <>
