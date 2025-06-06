@@ -2,26 +2,19 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 function useGetColor() {
-    const [colors, setColor] = useState<string[]>([]);
-    useEffect(() => {
-        const auth = {
-            headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('token')
-            }
-        };
+  const [colors, setColor] = useState<string[]>([]);
+  const fetchColours = () => {
+    axios.get('https://bootcamp2025.depster.me/api/colors', {
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }
+    })
+      .then(res => setColor(res.data.data))
+      .catch(err => console.error(err));
+  };
 
-        axios.get('https://bootcamp2025.depster.me/api/colors', auth)
-        .then(response => {
-            setColor(response.data.data);
-        })
-        .catch(error => {
-            console.error('Error fetching color:', error);
-        });
-    }, []);
-    
-        console.log('Colors state:', colors);
+  console.log('Colors state:', colors);
 
-    return colors;
+  return { colors, fetchColours };
+
 }
 
 function getSavedColors(): string[] {
@@ -43,9 +36,10 @@ function saveColors(colors: string[]) {
 }
 
 const FetchGrid: React.FC = () => {
-  const colors = useGetColor();
+  const {colors, fetchColours} = useGetColor();
   return (
     <div>
+      <button onClick={fetchColours}>Get New Colours</button>
       <div className="grid">
         {colors.map((color, index) => (
           <div
